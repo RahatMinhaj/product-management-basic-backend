@@ -37,7 +37,7 @@ public class InboxService {
 
 
     public Optional<InboxDto> getById(Long id) {
-        return Optional.ofNullable(inboxRepository.findById(id).map(this::entityToDto).orElseThrow(() -> new RuntimeException("Item with ID " + id + " not found")));
+        return Optional.ofNullable(inboxRepository.findById(id).map(this::entityToDto).orElseThrow(() -> new RuntimeException("Inbox with ID " + id + " not found")));
     }
 
 
@@ -57,10 +57,10 @@ public class InboxService {
 
 
     public Optional<InboxDto> update(InboxParam inboxParam) {
-        return Optional.ofNullable(inboxRepository.findById(inboxParam.getItemId()).map(inbox -> {
+        return Optional.ofNullable(inboxRepository.findById(inboxParam.getId()).map(inbox -> {
             paramToEntity(inboxParam, inbox);
             return inboxRepository.save(inbox);
-        }).map(this::entityToDto).orElseThrow(() -> new RuntimeException("Item with ID " + inboxParam.getItemId() + " not found")));
+        }).map(this::entityToDto).orElseThrow(() -> new RuntimeException("Inbox with ID " + inboxParam.getId() + " not found")));
     }
 
     public void delete(Long id) {

@@ -6,6 +6,7 @@ import com.minhaz.productmanagement.dto.ChargeFailureLogDto;
 import com.minhaz.productmanagement.entity.ChargeFailureLog;
 import com.minhaz.productmanagement.param.PageableParam;
 import com.minhaz.productmanagement.param.ChargeFailureLogParam;
+import com.minhaz.productmanagement.service.ChargeFailureLogService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -28,20 +29,20 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(ApiProvider.Purchase.ROOTPATH)
+@RequestMapping(ApiProvider.ChargeFailureLog.ROOTPATH)
 @Slf4j
-public class PurchaseController {
-    private final PurchaseService purchaseService;
+public class ChargeFailureLogController {
+    private final ChargeFailureLogService failureLogService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<ChargeFailureLogDto>> save(@RequestBody ChargeFailureLogParam param) {
-        return ResponseEntity.status(HttpStatus.OK).body(purchaseService.create(param));
+        return ResponseEntity.status(HttpStatus.OK).body(failureLogService.create(param));
     }
 
 
-    @GetMapping(value = ApiProvider.Purchase.PURCHASE_IDENTIFIER)
+    @GetMapping(value = ApiProvider.ChargeFailureLog.CHARGE_FAILURE_LOG_IDENTIFIER)
     public ResponseEntity<Optional<ChargeFailureLogDto>> findById(@PathVariable("id") Long id) {
-        Optional<ChargeFailureLogDto> purchaseDto = purchaseService.getById(id);
+        Optional<ChargeFailureLogDto> purchaseDto = failureLogService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(purchaseDto);
     }
 
@@ -59,21 +60,21 @@ public class PurchaseController {
                     @Spec(path = "s.name", params = "itemId", spec = Equal.class),
             }) @Schema(hidden = true) Specification<ChargeFailureLog> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
-            return ResponseEntity.status(HttpStatus.OK).body(purchaseService.getAll(specification,pageable.getPageable()));
+            return ResponseEntity.status(HttpStatus.OK).body(failureLogService.getAll(specification,pageable.getPageable()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(purchaseService.getAll(specification, pageable.getSort()));
+        return ResponseEntity.status(HttpStatus.OK).body(failureLogService.getAll(specification, pageable.getSort()));
     }
 
-    @PutMapping(value = ApiProvider.Purchase.PURCHASE_IDENTIFIER)
+    @PutMapping(value = ApiProvider.ChargeFailureLog.CHARGE_FAILURE_LOG_IDENTIFIER)
     public ResponseEntity<Optional<ChargeFailureLogDto>> update(@PathVariable("id") Long id, @RequestBody ChargeFailureLogParam param) {
         param.setPurchaseId(id);
-        Optional<ChargeFailureLogDto> purchaseDto = purchaseService.update(param);
+        Optional<ChargeFailureLogDto> purchaseDto = failureLogService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(purchaseDto);
     }
 
-    @DeleteMapping(value = ApiProvider.Purchase.PURCHASE_IDENTIFIER)
+    @DeleteMapping(value = ApiProvider.ChargeFailureLog.CHARGE_FAILURE_LOG_IDENTIFIER)
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        purchaseService.delete(id);
+        failureLogService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Data Deleted Successfully");
     }
 

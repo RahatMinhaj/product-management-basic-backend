@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InboxParam {
+public class InboxParam extends BaseParam {
     private Long transactionId;
     private String operator;
     private String shortCode;

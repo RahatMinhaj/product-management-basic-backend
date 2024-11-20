@@ -6,6 +6,7 @@ import com.minhaz.productmanagement.dto.KeywordDto;
 import com.minhaz.productmanagement.entity.Keyword;
 import com.minhaz.productmanagement.param.PageableParam;
 import com.minhaz.productmanagement.param.KeywordParam;
+import com.minhaz.productmanagement.service.KeywordService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -27,26 +28,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(ApiProvider.Store.ROOTPATH)
+@RequestMapping(ApiProvider.Keyword.ROOTPATH)
 @Slf4j
-public class StoreController {
-    private final StoreService storeService;
+public class KeywordController {
+    private final KeywordService keywordService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<KeywordDto>> save(@RequestBody KeywordParam param) {
-        return ResponseEntity.status(HttpStatus.OK).body(storeService.create(param));
+        return ResponseEntity.status(HttpStatus.OK).body(keywordService.create(param));
     }
 
 
-    @GetMapping(value = ApiProvider.Store.STORE_IDENTIFIER)
+    @GetMapping(value = ApiProvider.Keyword.KEYWORD_IDENTIFIER)
     public ResponseEntity<Optional<KeywordDto>> findById(@PathVariable("id") Long id) {
-        Optional<KeywordDto> storeDto = storeService.getById(id);
+        Optional<KeywordDto> storeDto = keywordService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(storeDto);
     }
 
     @Parameters({
-            @Parameter(name = "name", in = ParameterIn.QUERY, schema = @Schema(type = "string")),
-            @Parameter(name = "price", in = ParameterIn.QUERY, schema = @Schema(type = "int")),
             @Parameter(name = "pageNo", in = ParameterIn.QUERY, schema = @Schema(type = "int", defaultValue = "1")),
             @Parameter(name = "pageSize", in = ParameterIn.QUERY, schema = @Schema(type = "int", defaultValue = "20")),
             @Parameter(name = "sortBy", in = ParameterIn.QUERY, schema = @Schema(type = "string"), example = "createdAt:desc")
@@ -54,25 +53,24 @@ public class StoreController {
     @GetMapping
     public ResponseEntity findAll(
             @And({
-                    @Spec(path = "price", params = "price", spec = Equal.class),
-                    @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
+
             }) @Schema(hidden = true) Specification<Keyword> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
-            return ResponseEntity.status(HttpStatus.OK).body(storeService.getAll(specification, pageable.getPageable()));
+            return ResponseEntity.status(HttpStatus.OK).body(keywordService.getAll(specification, pageable.getPageable()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(storeService.getAll(specification, pageable.getSort()));
+        return ResponseEntity.status(HttpStatus.OK).body(keywordService.getAll(specification, pageable.getSort()));
     }
 
-    @PutMapping(value = ApiProvider.Store.STORE_IDENTIFIER)
+    @PutMapping(value = ApiProvider.Keyword.KEYWORD_IDENTIFIER)
     public ResponseEntity<Optional<KeywordDto>> update(@PathVariable("id") Long id, @RequestBody KeywordParam param) {
         param.setStoreId(id);
-        Optional<KeywordDto> storeDto = storeService.update(param);
+        Optional<KeywordDto> storeDto = keywordService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(storeDto);
     }
 
-    @DeleteMapping(value = ApiProvider.Store.STORE_IDENTIFIER)
+    @DeleteMapping(value = ApiProvider.Keyword.KEYWORD_IDENTIFIER)
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        storeService.delete(id);
+        keywordService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Data Deleted Successfully");
     }
 

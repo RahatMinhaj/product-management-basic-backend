@@ -5,7 +5,8 @@ import com.minhaz.productmanagement.component.route.ApiProvider;
 import com.minhaz.productmanagement.dto.ChargeSuccessLogDto;
 import com.minhaz.productmanagement.entity.ChargeSuccessLog;
 import com.minhaz.productmanagement.param.PageableParam;
-import com.minhaz.productmanagement.param.SaleParam;
+import com.minhaz.productmanagement.param.ChargeSuccessLogParam;
+import com.minhaz.productmanagement.service.ChargeSuccessLogService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -24,21 +25,21 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(ApiProvider.Sale.ROOTPATH)
+@RequestMapping(ApiProvider.ChargeSuccessLog.ROOTPATH)
 @Slf4j
-public class SaleController {
-    private final SaleService saleService;
+public class ChargeSuccessLogController {
+    private final ChargeSuccessLogService chargeSuccessLogService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<ChargeSuccessLogDto>> save(@RequestBody SaleParam param) {
+    public ResponseEntity<Optional<ChargeSuccessLogDto>> save(@RequestBody ChargeSuccessLogParam param) {
         log.debug("Request to Create Item... {}", param);
-        return ResponseEntity.status(HttpStatus.OK).body(saleService.create(param));
+        return ResponseEntity.status(HttpStatus.OK).body(chargeSuccessLogService.create(param));
     }
 
 
-    @GetMapping(value = ApiProvider.Sale.SALE_IDENTIFIER)
+    @GetMapping(value = ApiProvider.ChargeSuccessLog.CHARGE_SUCCESS_LOG_IDENTIFIER)
     public ResponseEntity<Optional<ChargeSuccessLogDto>> findById(@PathVariable("id") Long id) {
-        Optional<ChargeSuccessLogDto> saleDto = saleService.getById(id);
+        Optional<ChargeSuccessLogDto> saleDto = chargeSuccessLogService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(saleDto);
     }
 
@@ -53,23 +54,23 @@ public class SaleController {
             @And({
             }) @Schema(hidden = true) Specification<ChargeSuccessLog> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
-            return ResponseEntity.status(HttpStatus.OK).body(saleService.getAll(specification,pageable.getPageable()));
+            return ResponseEntity.status(HttpStatus.OK).body(chargeSuccessLogService.getAll(specification,pageable.getPageable()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(saleService.getAll(specification, pageable.getSort()));
+        return ResponseEntity.status(HttpStatus.OK).body(chargeSuccessLogService.getAll(specification, pageable.getSort()));
     }
 
 
-    @PutMapping(value = ApiProvider.Sale.SALE_IDENTIFIER)
-    public ResponseEntity<Optional<ChargeSuccessLogDto>> update(@PathVariable("id") Long id, @RequestBody SaleParam param) {
+    @PutMapping(value = ApiProvider.ChargeSuccessLog.CHARGE_SUCCESS_LOG_IDENTIFIER)
+    public ResponseEntity<Optional<ChargeSuccessLogDto>> update(@PathVariable("id") Long id, @RequestBody ChargeSuccessLogParam param) {
         log.debug("Request to Update job-post...{} --> {}", id, param);
-        param.setSaleId(id);
-        Optional<ChargeSuccessLogDto> saleDto = saleService.update(param);
+        param.setId(id);
+        Optional<ChargeSuccessLogDto> saleDto = chargeSuccessLogService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(saleDto);
     }
 
-    @DeleteMapping(value = ApiProvider.Sale.SALE_IDENTIFIER)
+    @DeleteMapping(value = ApiProvider.ChargeSuccessLog.CHARGE_SUCCESS_LOG_IDENTIFIER)
     public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
-        saleService.delete(id);
+        chargeSuccessLogService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body("Data Deleted Successfully");
     }
 
