@@ -2,12 +2,10 @@ package com.minhaz.productmanagement.controller;
 
 
 import com.minhaz.productmanagement.component.route.ApiProvider;
-import com.minhaz.productmanagement.dto.PurchaseDto;
-import com.minhaz.productmanagement.entity.Item;
-import com.minhaz.productmanagement.entity.Purchase;
+import com.minhaz.productmanagement.dto.ChargeFailureLogDto;
+import com.minhaz.productmanagement.entity.ChargeFailureLog;
 import com.minhaz.productmanagement.param.PageableParam;
-import com.minhaz.productmanagement.param.PurchaseParam;
-import com.minhaz.productmanagement.service.PurchaseService;
+import com.minhaz.productmanagement.param.ChargeFailureLogParam;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -16,7 +14,6 @@ import jakarta.persistence.criteria.JoinType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Join;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
@@ -37,14 +34,14 @@ public class PurchaseController {
     private final PurchaseService purchaseService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<PurchaseDto>> save(@RequestBody PurchaseParam param) {
+    public ResponseEntity<Optional<ChargeFailureLogDto>> save(@RequestBody ChargeFailureLogParam param) {
         return ResponseEntity.status(HttpStatus.OK).body(purchaseService.create(param));
     }
 
 
     @GetMapping(value = ApiProvider.Purchase.PURCHASE_IDENTIFIER)
-    public ResponseEntity<Optional<PurchaseDto>> findById(@PathVariable("id") Long id) {
-        Optional<PurchaseDto> purchaseDto = purchaseService.getById(id);
+    public ResponseEntity<Optional<ChargeFailureLogDto>> findById(@PathVariable("id") Long id) {
+        Optional<ChargeFailureLogDto> purchaseDto = purchaseService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(purchaseDto);
     }
 
@@ -60,7 +57,7 @@ public class PurchaseController {
             @Join(path = "item",type = JoinType.LEFT, alias = "i", distinct = false)
             @And({
                     @Spec(path = "s.name", params = "itemId", spec = Equal.class),
-            }) @Schema(hidden = true) Specification<Purchase> specification, @Schema(hidden = true) PageableParam pageable) {
+            }) @Schema(hidden = true) Specification<ChargeFailureLog> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
             return ResponseEntity.status(HttpStatus.OK).body(purchaseService.getAll(specification,pageable.getPageable()));
         }
@@ -68,9 +65,9 @@ public class PurchaseController {
     }
 
     @PutMapping(value = ApiProvider.Purchase.PURCHASE_IDENTIFIER)
-    public ResponseEntity<Optional<PurchaseDto>> update(@PathVariable("id") Long id, @RequestBody PurchaseParam param) {
+    public ResponseEntity<Optional<ChargeFailureLogDto>> update(@PathVariable("id") Long id, @RequestBody ChargeFailureLogParam param) {
         param.setPurchaseId(id);
-        Optional<PurchaseDto> purchaseDto = purchaseService.update(param);
+        Optional<ChargeFailureLogDto> purchaseDto = purchaseService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(purchaseDto);
     }
 

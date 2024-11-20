@@ -2,12 +2,10 @@ package com.minhaz.productmanagement.controller;
 
 
 import com.minhaz.productmanagement.component.route.ApiProvider;
-import com.minhaz.productmanagement.dto.SaleDto;
-import com.minhaz.productmanagement.entity.Item;
-import com.minhaz.productmanagement.entity.Sale;
+import com.minhaz.productmanagement.dto.ChargeSuccessLogDto;
+import com.minhaz.productmanagement.entity.ChargeSuccessLog;
 import com.minhaz.productmanagement.param.PageableParam;
 import com.minhaz.productmanagement.param.SaleParam;
-import com.minhaz.productmanagement.service.SaleService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -32,15 +30,15 @@ public class SaleController {
     private final SaleService saleService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<SaleDto>> save(@RequestBody SaleParam param) {
+    public ResponseEntity<Optional<ChargeSuccessLogDto>> save(@RequestBody SaleParam param) {
         log.debug("Request to Create Item... {}", param);
         return ResponseEntity.status(HttpStatus.OK).body(saleService.create(param));
     }
 
 
     @GetMapping(value = ApiProvider.Sale.SALE_IDENTIFIER)
-    public ResponseEntity<Optional<SaleDto>> findById(@PathVariable("id") Long id) {
-        Optional<SaleDto> saleDto = saleService.getById(id);
+    public ResponseEntity<Optional<ChargeSuccessLogDto>> findById(@PathVariable("id") Long id) {
+        Optional<ChargeSuccessLogDto> saleDto = saleService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(saleDto);
     }
 
@@ -53,7 +51,7 @@ public class SaleController {
     @GetMapping
     public ResponseEntity findAll(
             @And({
-            }) @Schema(hidden = true) Specification<Sale> specification, @Schema(hidden = true) PageableParam pageable) {
+            }) @Schema(hidden = true) Specification<ChargeSuccessLog> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
             return ResponseEntity.status(HttpStatus.OK).body(saleService.getAll(specification,pageable.getPageable()));
         }
@@ -62,10 +60,10 @@ public class SaleController {
 
 
     @PutMapping(value = ApiProvider.Sale.SALE_IDENTIFIER)
-    public ResponseEntity<Optional<SaleDto>> update(@PathVariable("id") Long id, @RequestBody SaleParam param) {
+    public ResponseEntity<Optional<ChargeSuccessLogDto>> update(@PathVariable("id") Long id, @RequestBody SaleParam param) {
         log.debug("Request to Update job-post...{} --> {}", id, param);
         param.setSaleId(id);
-        Optional<SaleDto> saleDto = saleService.update(param);
+        Optional<ChargeSuccessLogDto> saleDto = saleService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(saleDto);
     }
 

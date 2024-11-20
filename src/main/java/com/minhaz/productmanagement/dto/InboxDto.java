@@ -10,11 +10,10 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaleDto {
-    private Long saleId;
-    private ItemDto itemDto;
-    private StoreDto storeDto;
-    private Integer quantity;
-    private BigDecimal salePrice;
+public class InboxDto {
+    private Long itemId;
+    private String name;
+    private String description;
+    private BigDecimal price;
     private LocalDateTime createdAt;
 }

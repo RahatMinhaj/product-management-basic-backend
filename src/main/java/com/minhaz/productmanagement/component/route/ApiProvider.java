@@ -17,9 +17,9 @@ public abstract class ApiProvider {
     public static final String IDENTIFIER_USERNAME = SEPARATOR + OPEN_PARENTHESIS + "username" + CLOSE_PARENTHESIS;
     public static final String IDENTIFIER_CODE = SEPARATOR + OPEN_PARENTHESIS + "code" + CLOSE_PARENTHESIS;
 
-    public static class Item {
-        public static final String ROOTPATH = BASEPATH + VERSION + SEPARATOR + "items";
-        public static final String ITEM_IDENTIFIER = IDENTIFIER;
+    public static class ChargeConfig {
+        public static final String ROOTPATH = BASEPATH + VERSION + SEPARATOR + "charge-configs";
+        public static final String CHARGE_CONFIG_IDENTIFIER = IDENTIFIER;
     }
 
     public static class Store {

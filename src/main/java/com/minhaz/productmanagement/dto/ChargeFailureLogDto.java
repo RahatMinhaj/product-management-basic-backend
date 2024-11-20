@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PurchaseDto {
+public class ChargeFailureLogDto {
     private Long purchaseId;
-    private ItemDto itemDto;
-    private StoreDto storeDto;
+    private ChargeConfigDto chargeConfigDto;
+    private KeywordDto keywordDto;
     private Integer quantity;
     private BigDecimal purchasePrice;
     private LocalDateTime createdAt;

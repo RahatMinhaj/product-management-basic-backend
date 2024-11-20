@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StoreDto {
+public class KeywordDto {
     private Long storeId;
     private String name;
     private String location;

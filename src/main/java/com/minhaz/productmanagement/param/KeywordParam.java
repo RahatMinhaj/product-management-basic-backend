@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreParam {
+public class KeywordParam {
+    private Long id;
     private Long storeId;
     @NotNull
     private String name;

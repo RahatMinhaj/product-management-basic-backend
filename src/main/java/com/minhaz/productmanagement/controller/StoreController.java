@@ -2,11 +2,10 @@ package com.minhaz.productmanagement.controller;
 
 
 import com.minhaz.productmanagement.component.route.ApiProvider;
-import com.minhaz.productmanagement.dto.StoreDto;
-import com.minhaz.productmanagement.entity.Store;
+import com.minhaz.productmanagement.dto.KeywordDto;
+import com.minhaz.productmanagement.entity.Keyword;
 import com.minhaz.productmanagement.param.PageableParam;
-import com.minhaz.productmanagement.param.StoreParam;
-import com.minhaz.productmanagement.service.StoreService;
+import com.minhaz.productmanagement.param.KeywordParam;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -34,14 +33,14 @@ public class StoreController {
     private final StoreService storeService;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Optional<StoreDto>> save(@RequestBody StoreParam param) {
+    public ResponseEntity<Optional<KeywordDto>> save(@RequestBody KeywordParam param) {
         return ResponseEntity.status(HttpStatus.OK).body(storeService.create(param));
     }
 
 
     @GetMapping(value = ApiProvider.Store.STORE_IDENTIFIER)
-    public ResponseEntity<Optional<StoreDto>> findById(@PathVariable("id") Long id) {
-        Optional<StoreDto> storeDto = storeService.getById(id);
+    public ResponseEntity<Optional<KeywordDto>> findById(@PathVariable("id") Long id) {
+        Optional<KeywordDto> storeDto = storeService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(storeDto);
     }
 
@@ -57,7 +56,7 @@ public class StoreController {
             @And({
                     @Spec(path = "price", params = "price", spec = Equal.class),
                     @Spec(path = "name", params = "name", spec = LikeIgnoreCase.class),
-            }) @Schema(hidden = true) Specification<Store> specification, @Schema(hidden = true) PageableParam pageable) {
+            }) @Schema(hidden = true) Specification<Keyword> specification, @Schema(hidden = true) PageableParam pageable) {
         if (pageable.isPageable()) {
             return ResponseEntity.status(HttpStatus.OK).body(storeService.getAll(specification, pageable.getPageable()));
         }
@@ -65,9 +64,9 @@ public class StoreController {
     }
 
     @PutMapping(value = ApiProvider.Store.STORE_IDENTIFIER)
-    public ResponseEntity<Optional<StoreDto>> update(@PathVariable("id") Long id, @RequestBody StoreParam param) {
+    public ResponseEntity<Optional<KeywordDto>> update(@PathVariable("id") Long id, @RequestBody KeywordParam param) {
         param.setStoreId(id);
-        Optional<StoreDto> storeDto = storeService.update(param);
+        Optional<KeywordDto> storeDto = storeService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(storeDto);
     }
 

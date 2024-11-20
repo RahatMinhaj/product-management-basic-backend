@@ -1,5 +1,6 @@
 package com.minhaz.productmanagement.param;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +13,13 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseParam {
-    private Long purchaseId;
-    private Long itemId;
-    private Long storeId;
-    @NotNull
-    private Integer quantity;
-    private BigDecimal purchasePrice;
+public class InboxParam {
+    private Long transactionId;
+    private String operator;
+    private String shortCode;
+    private String msisdn;
+    private String keyword;
+    private String gameName;
+    private String sms;
+    private String status;
 }

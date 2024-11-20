@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemParam {
-    private Long itemId;
+public class ChargeConfigParam {
+    private Long id;
     @NotNull
     private String name;
     private String description;
