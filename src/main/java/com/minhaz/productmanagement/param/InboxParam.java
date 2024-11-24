@@ -2,24 +2,20 @@ package com.minhaz.productmanagement.param;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class InboxParam extends BaseParam {
-    private Long transactionId;
+    private UUID transactionId;
     private String operator;
-    private String shortCode;
-    private String msisdn;
-    private String keyword;
-    private String gameName;
+    private Long shortCode;
+    private Long msisdn;
     private String sms;
-    private String status;
 }

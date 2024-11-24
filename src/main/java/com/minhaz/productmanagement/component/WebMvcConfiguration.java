@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilde
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.LocaleResolver;
@@ -44,5 +45,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
+    }
+
+    @Bean
+    public RestClient restClient() {
+        return RestClient.create();
     }
 }

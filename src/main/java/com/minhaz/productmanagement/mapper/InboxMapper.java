@@ -8,9 +8,11 @@ import com.minhaz.productmanagement.param.InboxParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+import java.util.Map;
+
 @Mapper(config = ConfigMapper.class)
 public interface InboxMapper {
     void paramToEntity(InboxParam param, @MappingTarget Inbox entity);
-
     InboxDto entityToDto(Inbox entity);
 }

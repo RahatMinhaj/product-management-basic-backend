@@ -14,9 +14,9 @@ import org.mapstruct.Mappings;
 public interface ChargeFailureLogMapper {
     void paramToEntity(ChargeFailureLogParam param, @MappingTarget ChargeFailureLog entity);
 
-    @Mappings({
-            @Mapping(source = "item", target = "itemDto"),
-            @Mapping(source = "store", target = "storeDto")
-    })
+//    @Mappings({
+//            @Mapping(source = "item", target = "itemDto"),
+//            @Mapping(source = "store", target = "storeDto")
+//    })
     ChargeFailureLogDto entityToDto(ChargeFailureLog entity);
 }

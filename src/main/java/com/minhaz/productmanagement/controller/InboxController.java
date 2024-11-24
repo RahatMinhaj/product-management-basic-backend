@@ -52,6 +52,9 @@ public class InboxController {
             @And({
                     
             }) @Schema(hidden = true) Specification<Inbox> specification, @Schema(hidden = true) PageableParam pageable) {
+
+        inboxService.getAndSaveContentsFromApis();
+
         if (pageable.isPageable()) {
             return ResponseEntity.status(HttpStatus.OK).body(inboxService.getAll(specification, pageable.getPageable()));
         }
@@ -60,7 +63,7 @@ public class InboxController {
 
     @PutMapping(value = ApiProvider.InboxLog.INBOX_IDENTIFIER)
     public ResponseEntity<Optional<InboxDto>> update(@PathVariable("id") Long id, @RequestBody InboxParam param) {
-        param.setTransactionId(id);
+        param.setId(id);
         Optional<InboxDto> storeDto = inboxService.update(param);
         return ResponseEntity.status(HttpStatus.OK).body(storeDto);
     }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 public class Inbox extends BaseEntity {
 
     @Column(name = "transaction_id")
-    private Long transactionId;
+    private UUID transactionId;
 
     @Column(name = "operator", length = 100)
     private String operator;
